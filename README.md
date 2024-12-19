@@ -13,34 +13,33 @@ Pipeline Overview
 
 This pipeline focuses on analyzing sequencing data from extracellular vesicle (EV) DNA. It includes tools for quality control, adapter trimming, alignment, duplicate removal, normalization, and visualization.
 
-Steps
-	1.	Quality Control:
+**Steps**
+	**1.	Quality Control:**
 	•	Assess sequencing quality using FastQC.
 	•	Generate quality reports for raw FASTQ files.
-	2.	Adapter Trimming:
+	**2.	Adapter Trimming:**
 	•	Remove adapters and low-quality bases using Trimmomatic.
-	3.	Alignment:
+	**3.	Alignment:**
 	•	Map reads to the reference genome using Bowtie2 (short reads) or BWA-MEM (long reads).
-	4.	SAM/BAM Processing:
+	**4.	SAM/BAM Processing:**
 	•	Convert SAM to BAM, sort, and index alignments using Samtools.
-	5.	Quality Assessment:
+	**5.	Quality Assessment:**
 	•	Evaluate alignment quality and remove low-quality reads with Qualimap.
-	6.	Duplicate Removal:
+	**6.	Duplicate Removal:**
 	•	Identify and remove PCR duplicates using Picard.
-	7.	Coverage Tracks:
+	**7.	Coverage Tracks:**
 	•	Generate BigWig files for visualization of coverage using DeepTools.
-	8.	Read Counts Matrix:
+	**8.	Read Counts Matrix:**
 	•	Count aligned reads in genomic bins using FeatureCounts.
-	9.	Differential Abundance Analysis:
+	**9.	Differential Abundance Analysis:**
 	•	Perform differential analysis of copy number variations using edgeR.
-	10.	Visualization:
+	**10.	Visualization:**
 	•	Generate Miami plots to visualize CNVs with CMplot.
 Getting Started
 
-Prerequisites
+**Prerequisites**
 
 Before running the pipeline, ensure the following tools are installed:
-	•	Command-Line Tools:
 	•	FastQC
 	•	Trimmomatic
 	•	Bowtie2
@@ -54,22 +53,19 @@ Before running the pipeline, ensure the following tools are installed:
 	•	Rsubread
 	•	CMplot
 
-Installation
+**Installation**
 Clone the repository:
 
-git clone https://github.com/your-username/sequencing-analyses.git
-cd sequencing-analyses
+```bash
+git clone https://github.com/atiaamin2019/ExoCNV.git
+cd ExoCNV
+```
 
-Install Python and R dependencies:
-
-pip install -r requirements.txt
-
-
-License
+**License**
 
 This repository is licensed under the MIT License.
 
-Acknowledgments
+**Acknowledgments**
 
 This pipeline is based on the methodology described in the paper: https://www.sciencedirect.com/science/article/pii/S266616672300206X#fig5. Special thanks to all co-authors for their contributions. 
  
