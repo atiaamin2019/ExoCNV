@@ -1,0 +1,123 @@
+---
+title: "STAR_Protocol"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#edgeR analysis using 5kb bin size count matrix. 
+#Creating Count Matrix using featureCount
+```{r}
+
+#loading the annotation file
+ann <- read.table(
+  "./annotation.txt",
+  sep="\t", header=TRUE)
+ann
+
+```
+
+
+
+```{r}
+library(Rsubread)
+fc_PE <- featureCounts(files=dir(".","bam"), annot.ext=ann, isPairedEnd=TRUE)
+fc_count <- fc_PE$counts
+```
+
+#edgeR works on a table of integer read counts, with rows corresponding to genes and columns to independent libraries. edgeR stores data in a simple list-based data object called a DGEList. You can make this in R by specifying the counts and the groups in the function DGEList().
+
+```{r}
+library(edgeR)
+#Specify the counts and the groups in the function DGEList().
+
+group <-c("Sb_exosome","Sb_exosome","Sb_exosome", "WT_Exosome","WT_Exosome","WT_Exosome")
+
+d <- DGEList(counts=fc_count,group=factor(group))
+
+d$samples$lib.size <- colSums(d$counts)
+#d$samples
+
+d <- calcNormFactors(d)
+
+cpm_d <- cpm(d)
+
+#estimate of common dispersion
+d1 <- estimateCommonDisp(d, verbose=T)
+d1 <- estimateTagwiseDisp(d1)
+design.mat <- model.matrix(~ 0 + d$samples$group)
+colnames(design.mat) <- levels(d$samples$group)
+
+#Exact test
+et_sbe_wte <- exactTest(d1, pair=c("WT_Exosome", "Sb_exosome")) 
+
+#The total number of differentially abundant bins at FDR< 0:05 is:
+#Sb resistant exosome vs WT exosome
+de_wt_sb <- decideTestsDGE(et_sbe_wte, adjust.method="BH", p.value=0.05)
+summary(de_wt_sb)
+
+# differentially expressed tags from the naive method in d1
+detags_wt_sb <- rownames(d1)[as.logical(de_wt_sb)] 
+plotSmear(et_sbe_wte, de.tags=detags_wt_sb)
+abline(h = c(-2, 2), col = "blue")
+
+```
+
+```{r}
+# keep genes with at least 50 read/million in at least 3 samples
+keep <- rowSums(cpm_d>50) >= 3
+d50 <- d[keep,]
+cpm_d50 <- cpm(d50)
+
+#estimate of common dispersion
+d1_50 <- estimateCommonDisp(d50, verbose=T)
+names(d1_50)
+d1_50 <- estimateTagwiseDisp(d1_50)
+names(d1_50)
+design.mat <- model.matrix(~ 0 + d50$samples$group)
+colnames(design.mat) <- levels(d50$samples$group)
+
+#Exact test
+et_sbe_wte_50 <- exactTest(d1_50, pair=c("WT_Exosome", "Sb_exosome")) 
+topTags(et_sbe_wte_50, n=20)
+
+
+#The total number of differentially abundant bins at FDR< 0:05 is:
+#Sb resistant exosome vs WT exosome
+de_wt_sb_50 <- decideTestsDGE(et_sbe_wte_50, adjust.method="BH", p.value=0.05)
+summary(de_wt_sb_50)
+
+# differentially expressed tags from the naive method in d1
+detags_wt_sb_50 <- rownames(d1_50)[as.logical(de_wt_sb_50)] 
+plotSmear(et_sbe_wte_50, de.tags=detags_wt_sb_50)
+abline(h = c(-2, 2), col = "blue")
+
+```
+
+#CM Plot
+```{r}
+cm_plot_data <- read.delim("./cm_plot_data.csv",header = TRUE, sep = ",")
+library("CMplot")
+
+CMplot(cm_plot_data,band= 0.8,col=c("grey30","grey60"), ylim= list(c(-4,4),c(-4,4)),cir.chr.h=0.5,chr.den.col=c("lightblue","yellow","grey"), bin.size=5000,outward=TRUE,r=1.5,LOG10=FALSE,
+       file="jpg",memo="",dpi=300,file.output=TRUE,verbose=TRUE,width=10,height=10)
+
+```
+
+#visualize individual chromosome cmplot
+```{r}
+cm_plot_data_real_FC <- read.delim("./cm_plot_data_real_FC.csv",header = TRUE, sep = ",")
+
+CMplot(cm_plot_data_real_FC[cm_plot_data_real_FC$Chromosome==23, ],plot.type="m", col=c("grey60"),highlight.col="orange",highlight.cex=3, 
+ylim= list(c(-4,35),c(-4,35)),threshold=c(5,34), threshold.col=c("white","white"), bin.size=5000,outward=TRUE,r=1.5,LOG10=FALSE,signal.col=c("blue", "orange"),signal.cex=c(3,3), ylab="Fold Change", cex=3, cex.axis=1.8,ylab.pos=5,
+       file="jpg",memo="",dpi=300,file.output=TRUE,verbose=TRUE,width=25,height=10)
+
+```
+
+
+```{r}
+
+```
+
