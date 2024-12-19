@@ -55,11 +55,13 @@ Before running the pipeline, ensure the following tools are installed:
 	•	CMplot
 
 Installation
-	1.	Clone the repository:
- git clone https://github.com/your-username/sequencing-analyses.git
+Clone the repository:
+
+git clone https://github.com/your-username/sequencing-analyses.git
 cd sequencing-analyses
 
-	2.	Install Python and R dependencies:
+Install Python and R dependencies:
+
 pip install -r requirements.txt
 
 
