@@ -23,31 +23,31 @@ This pipeline focuses on analyzing sequencing data from extracellular vesicle (E
         •Generate quality reports for raw FASTQ files.
 	
  **2	Adapter Trimming:**
-        •Remove adapters and low-quality bases using Trimmomatic.
+        Remove adapters and low-quality bases using Trimmomatic.
 	
  **3	Alignment:**
-	•Map reads to the reference genome using Bowtie2 (short reads) or BWA-MEM (long reads).
+	Map reads to the reference genome using Bowtie2 (short reads) or BWA-MEM (long reads).
  
  **4	SAM/BAM Processing:**
-	•Convert SAM to BAM, sort, and index alignments using Samtools.
+	Convert SAM to BAM, sort, and index alignments using Samtools.
  
  **5	Quality Assessment:**
-       •Evaluate alignment quality and remove low-quality reads with Qualimap.
+       Evaluate alignment quality and remove low-quality reads with Qualimap.
        
 **6	Duplicate Removal:**
-       •Identify and remove PCR duplicates using Picard.
+       Identify and remove PCR duplicates using Picard.
        
 **7.	Coverage Tracks:**
-       •Generate BigWig files for visualization of coverage using DeepTools.
+       Generate BigWig files for visualization of coverage using DeepTools.
        
 **8	Read Counts Matrix:**
-       •Count aligned reads in genomic bins using FeatureCounts.
+       Count aligned reads in genomic bins using FeatureCounts.
        
 **9	Differential Abundance Analysis:**
-       •Perform differential analysis of copy number variations using edgeR.
+       Perform differential analysis of copy number variations using edgeR.
        
 **10	Visualization:**
-       •Generate Miami plots to visualize CNVs with CMplot.
+       Generate Miami plots to visualize CNVs with CMplot.
        
 
 **Getting Started**
