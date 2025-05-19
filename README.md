@@ -68,7 +68,7 @@ cd ExoCNV
 
 This repository is licensed under the MIT License.
 
-**Acknowledgments**
+**Cite this article:**
 
 This pipeline is based on the methodology described in the paper: https://www.sciencedirect.com/science/article/pii/S266616672300206X#fig5. Special thanks to all co-authors for their contributions. 
  
