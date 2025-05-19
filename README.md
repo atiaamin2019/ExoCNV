@@ -1,5 +1,7 @@
 # ExoCNV
-Analysis of DNA Content of small Extracellular Vesicles
+This is a bioinformatics pipeline for the analysis of DNA Content of small Extracellular Vesicles. 
+
+
 <img width="1080" alt="Screenshot 2024-12-18 at 11 08 49 PM" src="https://github.com/user-attachments/assets/b21e77a6-7fe4-47c7-9932-30b1b484d1c8" />
 
 This repository contains the complete bioinformatics pipeline for analyzing sequencing data, as described in this STAR Protocol article:
