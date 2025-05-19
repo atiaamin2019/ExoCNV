@@ -76,9 +76,6 @@ git clone https://github.com/atiaamin2019/ExoCNV.git
 cd ExoCNV
 ```
 
-**License**
-
-This repository is licensed under the MIT License.
 
 **Cite this article:**
 
